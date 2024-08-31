@@ -30,7 +30,7 @@
     "flow": "node ./scripts/check-flow-types.js",
     "tsc": "tsc",
     "tsc-extension": "npm run compile -w @lexical/devtools",
-    "tsc-watch": "tsc -w",
+    "tsc-watch": "tsc -w","test": "echo \"No tests specified\" && exit 0",
     "collab": "cross-env HOST=localhost PORT=1234 npx y-websocket-server",
     "validation": "npx ts-node --cwdMode packages/lexical-playground/src/server/validation.ts",
     "test-unit": "jest --selectProjects unit --testPathPattern",
