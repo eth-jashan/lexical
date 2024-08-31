@@ -46,6 +46,7 @@ import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
 import {INSERT_PAGE_BREAK} from '../PageBreakPlugin';
 import {InsertPollDialog} from '../PollPlugin';
 import {InsertTableDialog} from '../TablePlugin';
+import {INSERT_KANBAN_COMMAND} from '../KanbanPlugin';
 
 class ComponentPickerOption extends MenuOption {
   // What shows up in the editor
@@ -244,6 +245,13 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
       keywords: ['excalidraw', 'diagram', 'drawing'],
       onSelect: () =>
         editor.dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined),
+    }),
+    new ComponentPickerOption('Kanban', {
+      icon: <i className="icon diagram-2" />,
+      keywords: ['kanban', 'tasks', 'tasks board'],
+      onSelect: () => {
+        editor.dispatchCommand(INSERT_KANBAN_COMMAND, undefined);
+      },
     }),
     new ComponentPickerOption('Poll', {
       icon: <i className="icon poll" />,
