@@ -19,72 +19,7 @@ import {$getNodeByKey, $getRoot, EditorState, LexicalEditor} from 'lexical';
 import React, {useEffect, useState} from 'react';
 
 import {$createKanbanNode, $isKanbanNode, KanbanNode} from './KanbanNode.tsx';
-
-const InitialStatePlugin = ({initialState}: {initialState: string}) => {
-  const [editor] = useLexicalComposerContext();
-
-  React.useEffect(() => {
-    editor.update(() => {
-      const editorState = editor.parseEditorState(initialState);
-      editor.setEditorState(editorState);
-    });
-  }, [editor, initialState]);
-
-  return null;
-};
-
-interface TaskCardProps {
-  task: {
-    id: string;
-    columnId: string;
-    content: string; // Change this to string
-  };
-  onDragStart: (e: React.DragEvent, task: any) => void;
-  onUpdate: (taskId: string, columnId: string, content: string) => void;
-  onDelete: (taskId: string) => void;
-}
-
-const TaskCard: React.FC<TaskCardProps> = ({
-  task,
-  onDragStart,
-  onUpdate,
-  onDelete,
-}) => {
-  // console.log('lexicla editor....', task.content);
-
-  // const editorState = task.content.parseEditorState(
-  //   JSON.stringify(task.content),
-  // );
-  // if (!editorState.isEmpty()) {
-  //   task.content.setEditorState(editorState);
-  // }
-  const initialConfig = {
-    namespace: `TaskCard-${task.id}`,
-    onError: (error: Error) => console.error(error),
-  };
-
-  const updateContent = (editorState: EditorState) => {
-    onUpdate(task.id, task.columnId, JSON.stringify(editorState));
-  };
-  return (
-    <div
-      draggable={true}
-      onDragStart={(e) => onDragStart(e, task)}
-      className="KnabanNonde_taskCard">
-      <LexicalComposer initialConfig={initialConfig}>
-        <RichTextPlugin
-          contentEditable={
-            <ContentEditable className="KnabanNonde_taskCardContentEdit" />
-          }
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <HistoryPlugin />
-        <OnChangePlugin onChange={updateContent} />
-        <InitialStatePlugin initialState={task.content} />
-      </LexicalComposer>
-    </div>
-  );
-};
+import TaskCard from './TaskCard';
 
 // Kanban Board Component
 
@@ -210,7 +145,6 @@ export const KanbanBoard = ({columns, onUpdateBoard}) => {
                   onUpdate={updateTask}
                   task={task}
                   onDragStart={onDragStart}
-                  // onOpenModal={openModal}
                   onDelete={(taskId: unknown) => deleteTask(taskId, column.id)}
                 />
               ))}

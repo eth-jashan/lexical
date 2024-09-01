@@ -45,7 +45,6 @@ export class KanbanNode extends DecoratorNode<JSX.Element> {
     return false;
   }
   exportJSON(): SerializedKanbanNode {
-    console.log('exporting.......', this._columns);
     return {
       columns: this._columns,
       type: 'kanban',
@@ -53,26 +52,11 @@ export class KanbanNode extends DecoratorNode<JSX.Element> {
     };
   }
   static importJSON(serializedNode: SerializedKanbanNode): KanbanNode {
-    let parsedTasks = [];
-    const columns = serializedNode.columns.map((x) => {
-      if (x.tasks.length > 0) {
-        parsedTasks = x.tasks.map((y) => {
-          return {...y, content: JSON.stringify(y.content)};
-        });
-        return {...x, tasks: parsedTasks};
-      } else {
-        return {...x, tasks: []};
-      }
-      //   const nestedEditor = stickyNode.__caption;
-      //   return {...x, tasks: {...x.tasks, content:}};
-    });
-    console.log('importing........', columns);
     const node = $createKanbanNode(serializedNode.columns);
     return node;
   }
   updateColumn(column: unknown[]): void {
     const self = this.getWritable();
-    console.log('update...node element', column);
     self._columns = column;
   }
   decorate() {
