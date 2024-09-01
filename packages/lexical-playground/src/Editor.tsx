@@ -71,6 +71,7 @@ import TreeViewPlugin from './plugins/TreeViewPlugin';
 import TwitterPlugin from './plugins/TwitterPlugin';
 import YouTubePlugin from './plugins/YouTubePlugin';
 import ContentEditable from './ui/ContentEditable';
+import {useAutoSave} from './AutoSave';
 
 const skipCollaborationInit =
   // @ts-expect-error
@@ -128,6 +129,8 @@ export default function Editor(): JSX.Element {
       window.removeEventListener('resize', updateViewPortWidth);
     };
   }, [isSmallWidthViewport]);
+
+  useAutoSave();
 
   return (
     <>

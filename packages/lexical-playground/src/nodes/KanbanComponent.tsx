@@ -156,8 +156,7 @@ export const KanbanBoard = ({columns, onUpdateBoard}) => {
     onUpdateBoard(updatedColumns);
   };
 
-  const updateTask = (taskId: any, columnId: any, newContent: any) => {
-    console.log('update task!Q!!!!!!!!!!');
+  const updateTask = (taskId: unknown, columnId: any, newContent: any) => {
     const updatedColumns = columns.map((column: {id: unknown; tasks: any[]}) =>
       column.id === columnId
         ? {
@@ -204,16 +203,18 @@ export const KanbanBoard = ({columns, onUpdateBoard}) => {
               />
               <div className="KnabanNonde_columnTitle">{column.title}</div>
             </div>
-            {column.tasks?.map((task: {id: React.Key | null | undefined}) => (
-              <TaskCard
-                key={task.id}
-                onUpdate={updateTask}
-                task={task}
-                onDragStart={onDragStart}
-                // onOpenModal={openModal}
-                onDelete={(taskId: unknown) => deleteTask(taskId, column.id)}
-              />
-            ))}
+            <div style={{marginTop: 16}}>
+              {column.tasks?.map((task: {id: React.Key | null | undefined}) => (
+                <TaskCard
+                  key={task.id}
+                  onUpdate={updateTask}
+                  task={task}
+                  onDragStart={onDragStart}
+                  // onOpenModal={openModal}
+                  onDelete={(taskId: unknown) => deleteTask(taskId, column.id)}
+                />
+              ))}
+            </div>
             <div
               onClick={() => addTask(column.id)}
               className="KnabanNonde_columnAddBtn">
